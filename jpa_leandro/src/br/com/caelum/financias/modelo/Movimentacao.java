@@ -1,8 +1,9 @@
 package br.com.caelum.financias.modelo;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
+import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,9 +25,9 @@ public class Movimentacao {
 	
 	private String descricao;
 	
-	private Calendar data;
+	private Date data;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Conta conta;
 	
 	@Enumerated(EnumType.STRING)
@@ -71,7 +72,7 @@ public class Movimentacao {
 	 * Exibe a data da movimentação
 	 * @return
 	 */
-	public Calendar getData() {
+	public Date getData() {
 		return data;
 	}
 
@@ -79,7 +80,7 @@ public class Movimentacao {
 	 * Seta a data da movimentação
 	 * @param data
 	 */
-	public void setData(Calendar data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 	
