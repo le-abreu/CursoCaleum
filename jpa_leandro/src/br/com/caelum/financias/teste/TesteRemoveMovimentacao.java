@@ -14,12 +14,10 @@ public class TesteRemoveMovimentacao {
 	 */
 	public static void main(String[] args) {
 		EntityManager entityManager = JPAUtil.getEntityManager();
-		entityManager.getTransaction().begin();
 
 		MovimentacaoDao movimentacaoDao = new MovimentacaoDao(entityManager);
 		movimentacaoDao.remove(movimentacaoDao.busca(1));
 		
-		entityManager.getTransaction().commit();
 		entityManager.close();
 	}
 
