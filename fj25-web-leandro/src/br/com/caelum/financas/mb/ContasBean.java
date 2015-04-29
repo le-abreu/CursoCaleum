@@ -1,6 +1,5 @@
 package br.com.caelum.financas.mb;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -10,83 +9,73 @@ import javax.persistence.EntityManager;
 import br.com.caelum.financas.dao.ContaDAO;
 import br.com.caelum.financas.infra.JPAUtil;
 import br.com.caelum.financas.modelo.Conta;
-import br.com.caelum.financas.modelo.Gerente;
 
+
+/**
+ * ContasBean controller com a camada view para funcionalidades com o contas.xhtml
+ * @author leandro
+ *
+ */
 @ViewScoped
 @ManagedBean
 public class ContasBean {
+	
+	/*** ATRIBUTOS ***/
 	private Conta conta = new Conta();
-	private List<Conta> contas = new ArrayList<>();
+	private List<Conta> contas;
 
+	
+	/**
+	 * Metodo controller de gravar
+	 */
 	public void grava() {
-		System.out.println("Gravando a conta");
-		EntityManager em = new JPAUtil().getEntityManager();
-		em.getTransaction().begin();
-		ContaDAO dao = new ContaDAO(em);
+		EntityManager entityManager = new JPAUtil().getEntityManager();
+		entityManager.getTransaction().begin();
 		
-		if(conta.getId() == null) {
-			Gerente gerenteTosco = new Gerente();
-			
-			gerenteTosco.setCidade("Sampa");
-			gerenteTosco.setEstado("SP");
-			gerenteTosco.setNome("Caboclo");
-			gerenteTosco.setRua("R. Zero");
-			gerenteTosco.setTelefone("01123453242");
-			
-			em.persist(gerenteTosco);
-			
-			conta.setGerente(gerenteTosco);
-			
-			dao.adiciona(conta);
-		} else {
-			dao.altera(conta);
+		ContaDAO contaDAO = new ContaDAO(entityManager);
+		if(conta.getId() == null){
+			contaDAO.adiciona(conta);
+		}else{
+			contaDAO.altera(conta);
 		}
-		contas = dao.lista();
+		contas = contaDAO.lista();
 		
-		em.getTransaction().commit();
+		entityManager.getTransaction().commit();
+		entityManager.close();
 		
 		limpaFormularioDoJSF();
-
-		em.close();
-		
 	}
 
+	/**
+	 * Metodo remove contas controller 
+	 */
 	public void remove() {
-		System.out.println("Removendo a conta");
-		EntityManager em = new JPAUtil().getEntityManager();
-		em.getTransaction().begin();
+		EntityManager entityManager = new JPAUtil().getEntityManager();
+		entityManager.getTransaction().begin();
 		
-		ContaDAO dao = new ContaDAO(em);
+		ContaDAO contaDAO = new ContaDAO(entityManager);
+		contaDAO.remove(contaDAO.busca(conta.getId()));
+		contas = contaDAO.lista();
 		
-		Conta aRemover = dao.busca(this.conta.getId());
-		
-		em.remove(aRemover);
-		
-		em.getTransaction().commit();
-		
-		em.close();
+		entityManager.getTransaction().commit();
+		entityManager.close();
 		
 		limpaFormularioDoJSF();
 	}
 
-	public Conta getConta() {
-		return conta;
-	}
 
-	public void setConta(Conta conta) {
-		this.conta = conta;
-	}
-
+	/**
+	 * exibe uma lista de contas
+	 * @return
+	 */
 	public List<Conta> getContas() {
-		System.out.println("Listando as contas");
-		if(contas != null) {
-			EntityManager em = new JPAUtil().getEntityManager();
-			ContaDAO dao = new ContaDAO(em);
-			contas = dao.lista();
-			
-			em.close();
+		if(contas == null){
+			EntityManager entityManager = new JPAUtil().getEntityManager();
+			ContaDAO contaDAO = new ContaDAO(entityManager);
+			contaDAO.adiciona(conta);
+			contas = contaDAO.lista();
+			entityManager.close();
 		}
-
 		return contas;
 	}
 
@@ -96,5 +85,23 @@ public class ContasBean {
 	 */
 	private void limpaFormularioDoJSF() {
 		this.conta = new Conta();
+	}
+
+	
+	//GET's and SET's
+	/**
+	 * Metodo exibe a Conta
+	 * @return
+	 */
+	public Conta getConta() {
+		return conta;
+	}
+	
+	/**
+	 * Seta conta
+	 * @param conta
+	 */
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 }

@@ -65,7 +65,7 @@ public class MovimentacaoDAO {
 	}
 	
 	public List<Movimentacao> listaPorValorETipo(BigDecimal valor, TipoMovimentacao tipo) {
-		String jpql = "select m from Movimentacao m where m.valor=:valor and m.tipoMovimentacao=:tipo";
+		String jpql = "select m from Movimentacao m where m.valor <= :valor and m.tipoMovimentacao = :tipo";
 		
 		Query query = em.createQuery(jpql);
 		query.setParameter("valor", valor);
