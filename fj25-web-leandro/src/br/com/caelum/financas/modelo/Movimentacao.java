@@ -105,4 +105,9 @@ public class Movimentacao {
 		this.tags = tags;
 	}
 
+	@Override
+	public String toString() {
+		return getDescricao();
+	}
+
 }
