@@ -22,7 +22,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
-@NamedQuery(name="Movimentacao.buscaTodasMovimentacoesDaConta", query= "select m from Movimentacao m where m.conta.titular like :titular")
+@NamedQuery(name="Movimentacao.buscaTodasMovimentacoesDaConta", 
+	query= "select m from Movimentacao m where m.conta.titular like :ptitular")
 
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity

@@ -23,6 +23,10 @@ public class ContasBean {
 	/*** ATRIBUTOS ***/
 	private Conta conta = new Conta();
 	private List<Conta> contas;
+	
+// não funciona com a vcoped view
+//	@ManagedProperty(name="em",value="#{requestScope.em}")
+//	private EntityManager em;
 
 	
 	/**
@@ -72,7 +76,6 @@ public class ContasBean {
 		if(contas == null){
 			EntityManager entityManager = new JPAUtil().getEntityManager();
 			ContaDAO contaDAO = new ContaDAO(entityManager);
-			contaDAO.adiciona(conta);
 			contas = contaDAO.lista();
 			entityManager.close();
 		}

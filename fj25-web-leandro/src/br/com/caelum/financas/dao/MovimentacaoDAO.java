@@ -86,10 +86,8 @@ public class MovimentacaoDAO {
 	}
 	
 	public List<Movimentacao> buscaTodasMovimentacoesDaConta(String titular) {
-
-		Query query = em.createNativeQuery("Movimentacao.buscaTodasMovimentacoesDaConta");
-		query.setParameter("titular", "%"+titular+"%");
-		
+		Query query = em.createNamedQuery("Movimentacao.buscaTodasMovimentacoesDaConta");
+		query.setParameter("ptitular", titular);
 		return query.getResultList();
 	}
 	

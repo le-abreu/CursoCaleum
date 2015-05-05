@@ -1,8 +1,12 @@
 package br.com.caelum.financias.modelo;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 
 
 /**
@@ -28,8 +32,10 @@ public class Conta {
 	private String agencia;
 
 	private String banco;
-
-
+	
+	@OneToMany(mappedBy="conta")
+	private List<Movimentacao> movimenacoes;
+	
 	/*Get's and Set's*/
 	
 	/**
@@ -112,4 +118,19 @@ public class Conta {
 		this.banco = banco;
 	}
 
-}
+	/**
+	 * Sa} uma lista de movimentação
+	 * @return
+	 */
+	public List<Movimentacao> getMovimenacoes() {
+		return movimenacoes;
+	}
+
+	/**
+	 * Exibeuma lista de movimentação
+	 * @param movimenacoes
+	 */
+	public void setMovimenacoes(List<Movimentacao> movimenacoes) {
+		this.movimenacoes = movimenacoes;
+	}
+

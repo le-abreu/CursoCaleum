@@ -28,6 +28,7 @@ public class MovimentacoesBean {
 	private Movimentacao movimentacao = new Movimentacao();
 	private Integer contaId;
 	private String tags;
+	
 	@ManagedProperty(name="em",value="#{requestScope.em}")
 	private EntityManager em;
 
@@ -194,14 +195,9 @@ public class MovimentacoesBean {
 		protected abstract void execute();
 		
 		public void run(boolean executarCommit) {
-			
-			em.getTransaction().begin();
 			contaDao = new ContaDAO(em);
 			dao = new MovimentacaoDAO(em);
 			execute();
-			em.getTransaction().commit();
-			em.close();
-			
 		}
 	}
 

@@ -131,5 +131,5 @@ public class Movimentacao {
 	public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
 		this.tipoMovimentacao = tipoMovimentacao;
 	}
-	
+
 }
