@@ -37,7 +37,7 @@
 			
 			<!-- LUCENE -->
 			<property name="hibernate.search.default.directory_provider" value="org.hibernate.search.store.FSDirectoryProvider"/>
-			<property name="hibernate.search.default.indexBase" value="/home/jpa3426/workspace/projeto-fj25-web/WebContent/WEB-INF/lucene/indexes"/>
+			<property name="hibernate.search.default.indexBase" value="/home/leandro/git/CursoCaleum/fj25-web-leandro/WebContent/WEB-INF/lucene/indexes"/>
 			<property name="hibernate.search.analyzer" value="org.apache.lucene.analysis.br.BrazilianAnalyzer"/>
 
 			<!-- ehCaChe -->

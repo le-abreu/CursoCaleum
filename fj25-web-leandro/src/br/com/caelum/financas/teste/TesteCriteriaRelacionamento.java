@@ -1,4 +1,4 @@
-package br.com.caelum.financas.dao.teste;
+package br.com.caelum.financas.teste;
 
 import java.math.BigDecimal;
 
