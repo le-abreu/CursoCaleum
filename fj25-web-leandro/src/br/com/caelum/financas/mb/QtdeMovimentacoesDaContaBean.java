@@ -20,7 +20,6 @@ public class QtdeMovimentacoesDaContaBean {
 
 	public void lista() {
 		System.out.println("Exibindo as quantidades de movimentacoes da conta");
-		
 		ContaDAO dao = new ContaDAO(em);
 		conta = dao.busca(conta.getId());
 		quantidade = conta.getMovimentacoes().size();

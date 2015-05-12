@@ -15,13 +15,14 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.lucene.analysis.br.BrazilianAnalyzer;
-import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.util.Version;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 
+import br.com.caelum.financas.infra.search.ElementoDaBusca;
 import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.Movimentacao;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
@@ -71,6 +72,7 @@ public class MovimentacaoDAO {
 		query.setParameter("valor", valor);
 		query.setParameter("tipo", tipo);
 		
+		query.setHint("org.hibernate.cacheable", true);
 		return query.getResultList();
 	}
 	
@@ -170,9 +172,24 @@ public class MovimentacaoDAO {
 			
 			return textQuery.getResultList();
 			
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
 		}
+		
+	}
+	
+	public List<Movimentacao> buscaAvancada(ElementoDaBusca elementoDaBusca){
+		FullTextEntityManager fullTextEM = Search.getFullTextEntityManager(em);
+		QueryBuilder queryBuilder = fullTextEM.getSearchFactory().buildQueryBuilder().forEntity(Movimentacao.class).get();
+		org.apache.lucene.search.Query createQuery = queryBuilder.
+			keyword().
+			fuzzy().
+			withThreshold(elementoDaBusca.getSemelhanca().getValor()).
+			boostedTo(elementoDaBusca.getMultiplicador()).
+			onField("tags.nome").matching(elementoDaBusca.getTexto()).createQuery();
+		
+		FullTextQuery createFullTextQuery = fullTextEM.createFullTextQuery(createQuery, Movimentacao.class);
+		return createFullTextQuery.getResultList();
 		
 	}
 }

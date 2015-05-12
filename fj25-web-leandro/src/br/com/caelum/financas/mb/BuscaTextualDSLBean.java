@@ -1,12 +1,16 @@
 package br.com.caelum.financas.mb;
 
+import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.persistence.EntityManager;
 
+import br.com.caelum.financas.dao.MovimentacaoDAO;
 import br.com.caelum.financas.infra.search.ElementoDaBusca;
 import br.com.caelum.financas.infra.search.Presenca;
 import br.com.caelum.financas.infra.search.Semelhanca;
+import br.com.caelum.financas.modelo.Movimentacao;
 
 @ManagedBean
 public class BuscaTextualDSLBean {
@@ -17,9 +21,12 @@ public class BuscaTextualDSLBean {
 	private EntityManager em;
 
 	private ElementoDaBusca elemento = new ElementoDaBusca();
+
+	private List<Movimentacao> movimentacoes;
 	
 	public void buscaUsandoDSL() {
-		
+		MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(em);
+		movimentacoes = movimentacaoDAO.buscaAvancada(elemento);
 	}
 
 	private void limpaMovimentacoes() {
@@ -61,4 +68,13 @@ public class BuscaTextualDSLBean {
 	public ElementoDaBusca getElemento() {
 		return elemento;
 	}
+
+	public List<Movimentacao> getMovimentacoes() {
+		return movimentacoes;
+	}
+
+	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
+		this.movimentacoes = movimentacoes;
+	}
+	
 }

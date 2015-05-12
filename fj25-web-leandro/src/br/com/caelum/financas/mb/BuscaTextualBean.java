@@ -31,7 +31,6 @@ public class BuscaTextualBean {
 
 	public void busca() {
 		System.out.println("Buscando as movimentacoes associadas as tags");
-		
 		movimentacoes = new MovimentacaoDAO(em).buscaMovimentacoesBaseadoNasTags(tags);
 	}
 

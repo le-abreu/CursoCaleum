@@ -39,6 +39,7 @@
 			<property name="hibernate.search.default.directory_provider" value="org.hibernate.search.store.FSDirectoryProvider"/>
 			<property name="hibernate.search.default.indexBase" value="/home/leandro/git/CursoCaleum/fj25-web-leandro/WebContent/WEB-INF/lucene/indexes"/>
 			<property name="hibernate.search.analyzer" value="org.apache.lucene.analysis.br.BrazilianAnalyzer"/>
+			<property name="hibernate.search.default.exclusive_index_use" value="false" />  
 
 			<!-- ehCaChe -->
 			<property name="hibernate.cache.use_second_level_cache" value="true"/>

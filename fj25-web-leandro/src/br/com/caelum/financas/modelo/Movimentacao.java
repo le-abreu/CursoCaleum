@@ -20,6 +20,7 @@ import javax.validation.constraints.DecimalMin;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
 @NamedQuery(name="Movimentacao.buscaTodasMovimentacoesDaConta", 
@@ -28,6 +29,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Audited
+@Indexed
 public class Movimentacao {
 	@Id
 	@GeneratedValue
@@ -47,7 +49,7 @@ public class Movimentacao {
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@IndexedEmbedded
-	private List<Tag> tags = new ArrayList<>();
+	private List<Tag> tags = new ArrayList<Tag>();
 
 	public TipoMovimentacao getTipoMovimentacao() {
 		return tipoMovimentacao;

@@ -1,5 +1,6 @@
 package br.com.caelum.financas.modelo;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,9 +17,9 @@ public class Gerente {
 	private String nome;
 	private String telefone;
 	
-	private String rua;
-	private String cidade;
-	private String estado;
+	@Embedded
+	private Endereco endereco;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -37,23 +38,11 @@ public class Gerente {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	public String getRua() {
-		return rua;
+	public Endereco getEndereco() {
+		return endereco;
 	}
-	public void setRua(String rua) {
-		this.rua = rua;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
-	public String getCidade() {
-		return cidade;
-	}
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-	public String getEstado() {
-		return estado;
-	}
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-	
+
 }
