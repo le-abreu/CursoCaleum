@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:caelum="http://java.sun.com/jsf/composite/caelum"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_template.xhtml">
+	<ui:define name="subtitulo">Produto</ui:define>
+
+	<ui:define name="corpo">
+		<div id="conteudo">
+			<h:form id="form_nota">
+				<h:messages styleClass="erros" />
+
+				<fieldset>
+					<legend>Dados da nota</legend>
+
+					<h:outputLabel for="notaFiscal" value="CNPJ" />
+					<p:inputMask id="notaFiscal" mask="99.999.999/9999-99"
+						value="#{notaFiscalBean.notaFiscal.cnpj}" converter="cnpj"
+						converterMessage="CNPJ inválido" />
+
+					<h:outputLabel value="Data" />
+					<p:calendar pattern="dd/MM/yyyy"
+						value="#{notaFiscalBean.notaFiscal.data.time}" />
+
+				</fieldset>
+
+				<fieldset>
+					<legend>Dados do item</legend>
+
+					<h:outputLabel value="Produto" />
+					<h:selectOneMenu value="#{notaFiscalBean.idProduto}">
+						<f:selectItems value="#{produtoBean.produtos}" var="produto"
+							itemValue="#{produto.id}" itemLabel="#{produto.nome}" />
+
+						<!-- <f:selectItem value="0" itemLabel="Selecionar" /> -->
+					</h:selectOneMenu>
+
+					<h:outputLabel value="Quantidade" for="quantidade" />
+					<h:inputText id="quantidade"
+						value="#{notaFiscalBean.item.quantidade}" />
+
+					<p:commandButton action="#{notaFiscalBean.cancelar}" update="@form"
+						value="Cancelar" rendered="#{not empty notaFiscalBean.item.id}" />
+
+					<h:commandButton action="#{notaFiscalBean.guardaItem}" 
+						value="Guardar item">
+						<f:ajax render="@form :form_lista" execute="@form" />
+					</h:commandButton>
+
+				</fieldset>
+			</h:form>
+
+			<h:form id="form_lista">
+				<h2>Listagem de itens</h2>
+
+
+				<h:dataTable value="#{notaFiscalBean.notaFiscal.itens}" var="item"
+					styleClass="dados" rowClasses="impar,par">
+					<h:column>
+						<f:facet name="header">Ações</f:facet>
+
+						<h:commandButton value="Alterar">
+							<f:setPropertyActionListener target="#{notaFiscalBean.item}"
+								value="#{item}">
+							</f:setPropertyActionListener>
+							<f:ajax render=":form_nota" execute=":form_nota" />
+						</h:commandButton>
+
+						<h:commandButton value="Remover"
+							action="#{notaFiscalBean.tiraItem(item)}">
+							<f:ajax render="@form" execute="@form" />
+						</h:commandButton>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Produto</f:facet>
+						#{item.produto.nome}
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Preço</f:facet>
+						<h:outputText value="#{item.valorUnitario}">
+							<f:convertNumber pattern="R$ #0.00" />
+						</h:outputText>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Quantidade</f:facet>
+						#{item.quantidade}
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Valor</f:facet>
+						<h:outputText value="#{item.total}">
+							<f:convertNumber pattern="R$ #0.00" />
+						</h:outputText>
+						<f:facet name="footer">
+							<h:outputText value="#{notaFiscalBean.valorTotalNotaFiscal}">
+								<f:convertNumber pattern="R$ #0.00" />
+							</h:outputText>
+						</f:facet>
+					</h:column>
+				</h:dataTable>
+
+				<h:commandButton action="#{notaFiscalBean.gravar}"
+					value="Gravar nota fiscal">
+					<f:ajax render=":form_nota" execute=":form_nota" />
+				</h:commandButton>
+			</h:form>
+		</div>
+
+	</ui:define>
+
+
+</ui:composition>
+
+</html>

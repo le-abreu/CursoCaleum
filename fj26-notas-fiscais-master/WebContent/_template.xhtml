@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:caelum="http://java.sun.com/jsf/composite/caelum"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>
+		Sistema de Notas Fiscais - Uberdist: 
+		<ui:insert name="subtitulo" />
+	</title>
+	<h:outputStylesheet name="style.css" library="css" />
+</h:head>
+
+<h:body>
+	<div id="cabecalho">
+		<h:graphicImage library="imagens" name="logo-uber.png"
+			id="logoCompany" />
+	</div>
+
+	<div id="usuarioLogado">
+		<h:outputText rendered="#{loginBean.usuarioLogado.logado}"
+			value="Usuário(a): #{loginBean.usuarioLogado.usuario.login}"></h:outputText>
+	</div>
+
+	<div id="menu" class="menuPersonalizado">
+		<h:form>
+			<p:menubar>
+				<p:menuitem value="Login" action="#{loginBean.login}" 
+					 rendered="#{not loginBean.usuarioLogado.logado}"/>
+				
+				<p:submenu label="Cadastro" rendered="#{loginBean.usuarioLogado.logado}">
+					<p:menuitem value="Produtos" url="produto.xhtml" />
+					<p:menuitem value="Notas fiscais" url="notaFiscal.xhtml" />
+					<p:menuitem value="Lista de notas fiscais" url="listaNotasFiscais.xhtml" />
+					<p:menuitem value="Usuários" url="usuario.xhtml" />
+				</p:submenu>
+				
+				<p:menuitem value="Logoff" action="#{loginBean.efetuaLogoff}"
+					 rendered="#{loginBean.usuarioLogado.logado}" />
+			</p:menubar>		
+		</h:form>
+	</div>
+
+	<ui:insert name="corpo">
+		Corpo
+	</ui:insert>
+
+	<div id="rodape">Copyright 2013. Todos os direitos reservados a
+		André Formento</div>
+</h:body>
+</html>
