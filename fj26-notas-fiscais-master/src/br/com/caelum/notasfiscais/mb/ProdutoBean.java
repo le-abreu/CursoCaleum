@@ -35,15 +35,12 @@ public class ProdutoBean implements Serializable {
 	}
 
 	public String grava() {
-		getDAO().adiciona(produto);
-		produto = new Produto();
-		produtos = null;
-
-		return "produto?faces-redirect=true";
-	}
-
-	public String atualiza() {
-		getDAO().atualiza(produto);
+		DAO<Produto> dao = getDAO();
+		if(produto.getId() == null){
+			dao.adiciona(produto);
+		}else{
+			dao.atualiza(produto);
+		}
 		produto = new Produto();
 		produtos = null;
 

@@ -15,10 +15,12 @@
 
 			<h:form id="form_cadastro">
 				<h:messages styleClass="erros" />
-
+				
+				<h:outputText value="Novo Produto" rendered="#{produtoBean.produto.id eq null}" />
+				<h:outputText value="Alterar Produto #{produtoBean.produto.id}" rendered="#{produtoBean.produto.id ne null}" />
 				<fieldset>
 					<legend>Dados do produto</legend>
-
+					
 					<h:outputLabel value="Nome" for="nome" />
 					<h:inputText id="nome" value="#{produtoBean.produto.nome}">
 						<f:validator validatorId="ComecaComMaiuscula"/>
@@ -36,24 +38,9 @@
 						<f:validateDoubleRange minimum="0.5" />
 					</h:inputText>
 
-					<caelum:buttonAjax action="#{produtoBean.grava}" value="Cadastrar"
+					<caelum:buttonAjax action="#{produtoBean.grava}" value="Gravar"
 						render="@form :form_lista" />
 
-					<h:commandButton value="Atualizar" action="#{produtoBean.atualiza}"
-						rendered="#{not empty produtoBean.produto.id}">
-
-						<f:ajax execute="@form" render="@form :form_lista" />
-
-						<!-- execute -> envia os dados para o servidor -->
-
-						<!-- para executar mais de uma coisa: -->
-						<!-- "@form :idDeOutroForm :idDeOutroForm:componenteDoOutroForm" -->
-
-						<!-- render -> recebe os dados para o servidor -->
-
-						<!-- fazer exercicio 4.6 -->
-					</h:commandButton>
-					
 					<p:commandButton action="produto"
 							update="@form"
 							value="Cancelar"
@@ -76,32 +63,34 @@
 								value="#{produto}">
 								<f:ajax render="@form" />
 							</f:setPropertyActionListener>
-
 						</h:commandLink>
-						<h:commandButton value="Remover">
-							<f:ajax render="@form" listener="#{produtoBean.remove(produto)}" />
+						 - 
+						<h:commandLink value="Remover" id="linkRemoverProduto" action="#{produtoBean.remove(produto)}" >
+							<f:ajax render="@form"/>
+						</h:commandLink>
+						 - 
+						<h:commandButton value="Remover" action="#{produtoBean.remove(produto)}" >
+							<f:ajax render="@form"/>
 						</h:commandButton>
 
 					</h:column>
 
 					<h:column>
 						<f:facet name="header">Nome</f:facet>
-					#{produto.nome}
-				</h:column>
+						#{produto.nome}
+					</h:column>
 
 					<h:column>
 						<f:facet name="header">Descrição</f:facet>
-					#{produto.descricao}
-				</h:column>
+						#{produto.descricao}
+					</h:column>
 
 					<h:column>
 						<f:facet name="header">Preço</f:facet>
-					
-					R$ #{produto.preco}
-					
-					<f:facet name="footer">
-						Total: R$ #{produtoBean.precoTotal}
-				    </f:facet>
+						R$ #{produto.preco}
+						<f:facet name="footer">
+							Total: R$ #{produtoBean.precoTotal}
+					    </f:facet>
 					</h:column>
 				</h:dataTable>
 
