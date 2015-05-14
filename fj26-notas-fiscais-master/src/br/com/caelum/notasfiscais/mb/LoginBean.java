@@ -16,7 +16,7 @@ import br.com.caelum.notasfiscais.modelo.UsuarioLogado;
 
 // colocar o LoginBean no contexto do CDI
 @Named
-// esse é do Weld
+// esse ï¿½ do Weld
 // @SessionScoped
 @RequestScoped
 public class LoginBean implements Serializable {
@@ -29,7 +29,7 @@ public class LoginBean implements Serializable {
 	private UsuarioLogado usuarioLogado;
 	private Usuario usuario = new Usuario();
 
-	// aqui ele dá um new no UsuarioDAO
+	// aqui ele dï¿½ um new no UsuarioDAO
 	@Inject
 	public LoginBean(UsuarioDAO dao, UsuarioLogado usuarioLogado) {
 		this.dao = dao;
@@ -78,11 +78,6 @@ public class LoginBean implements Serializable {
 		return PaginaUtil.LOGIN+"?faces-redirect=true";
 	}
 }
-
-/**
- * deixa o carrinho de compras na session e o carrinho de compras bean em
- * request
- */
 
 /**
  * da pra colocar o @SessionScoped, @Named, isLogado() no Usuario e dai criar

@@ -14,10 +14,14 @@
 		<div id="conteudo">
 
 			<h:form id="form_cadastro">
-				<h:messages styleClass="erros" />
+				<h:panelGrid columns="1">
+					<h:messages styleClass="erros" />
+					<h:outputText value="Novo Produto" rendered="#{produtoBean.produto.id eq null}" />
+					<h:outputText value="Alterar Produto #{produtoBean.produto.id}" rendered="#{produtoBean.produto.id ne null}" />
+				</h:panelGrid>
 				
-				<h:outputText value="Novo Produto" rendered="#{produtoBean.produto.id eq null}" />
-				<h:outputText value="Alterar Produto #{produtoBean.produto.id}" rendered="#{produtoBean.produto.id ne null}" />
+				
+				
 				<fieldset>
 					<legend>Dados do produto</legend>
 					
@@ -37,15 +41,17 @@
 							validatorMessage="O valor mínimo é R$ 0,50">
 						<f:validateDoubleRange minimum="0.5" />
 					</h:inputText>
-
-					<caelum:buttonAjax action="#{produtoBean.grava}" value="Gravar"
-						render="@form :form_lista" />
-
-					<p:commandButton action="produto"
-							update="@form"
-							value="Cancelar"
-							rendered="#{not empty produtoBean.produto.id}"
-							immediate="true" />
+					
+					<h:panelGrid columns="2">
+						<caelum:buttonAjax action="#{produtoBean.grava}" value="Gravar"
+							render="@form :form_lista" />
+					
+						<p:commandButton action="produto"
+								update="@form"
+								value="Cancelar"
+								rendered="#{not empty produtoBean.produto.id}"
+								immediate="true" />
+					</h:panelGrid>
 				</fieldset>
 			</h:form>
 
@@ -56,25 +62,6 @@
 
 				<h:dataTable value="#{produtoBean.produtos}" var="produto"
 					styleClass="dados" rowClasses="impar,par">
-					<h:column>
-						<f:facet name="header">Ações</f:facet>
-						<h:commandLink value="Alterar">
-							<f:setPropertyActionListener target="#{produtoBean.produto}"
-								value="#{produto}">
-								<f:ajax render="@form" />
-							</f:setPropertyActionListener>
-						</h:commandLink>
-						 - 
-						<h:commandLink value="Remover" id="linkRemoverProduto" action="#{produtoBean.remove(produto)}" >
-							<f:ajax render="@form"/>
-						</h:commandLink>
-						 - 
-						<h:commandButton value="Remover" action="#{produtoBean.remove(produto)}" >
-							<f:ajax render="@form"/>
-						</h:commandButton>
-
-					</h:column>
-
 					<h:column>
 						<f:facet name="header">Nome</f:facet>
 						#{produto.nome}
@@ -91,6 +78,27 @@
 						<f:facet name="footer">
 							Total: R$ #{produtoBean.precoTotal}
 					    </f:facet>
+					</h:column>
+					
+					<h:column>
+						<h:commandLink value="Alterar">
+							<f:setPropertyActionListener target="#{produtoBean.produto}"
+								value="#{produto}">
+								<f:ajax render="@form" />
+							</f:setPropertyActionListener>
+						</h:commandLink>
+					</h:column>
+					
+					<h:column>	
+						<h:commandLink value="Remover" id="linkRemoverProduto" action="#{produtoBean.remove(produto)}" >
+							<f:ajax render="@form"/>
+						</h:commandLink>
+					</h:column>
+
+					<h:column>	
+						<h:commandButton value="Remover" action="#{produtoBean.remove(produto)}" >
+							<f:ajax render="@form"/>
+						</h:commandButton>
 					</h:column>
 				</h:dataTable>
 
