@@ -1,0 +1,22 @@
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence">
+  <persistence-unit name="notas" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    
+    <class>br.com.caelum.notasfiscais.modelo.Item</class>
+    <class>br.com.caelum.notasfiscais.modelo.NotaFiscal</class>
+    <class>br.com.caelum.notasfiscais.modelo.Produto</class>
+    <class>br.com.caelum.notasfiscais.modelo.Usuario</class>
+    
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbc.JDBCDriver"/>
+<!--      <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:/resource/db/notasFiscais.db"/> -->
+      <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:C:/Documents and Settings/wellington.nogueira/My Documents/GitHub/fj26-notas-fiscais/WebContent/resources/db/notasFiscais.db"/>
+      <property name="javax.persistence.jdbc.user" value="sa"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.show_sql" value="true" />
+      <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+    </properties>
+  </persistence-unit>
+</persistence>

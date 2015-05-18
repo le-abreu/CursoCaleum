@@ -1,0 +1,35 @@
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence">
+  <persistence-unit name="notas" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    
+    <class>br.com.caelum.notasfiscais.modelo.Item</class>
+    <class>br.com.caelum.notasfiscais.modelo.NotaFiscal</class>
+    <class>br.com.caelum.notasfiscais.modelo.Produto</class>
+    <class>br.com.caelum.notasfiscais.modelo.Usuario</class>
+    
+    <properties>
+<!--       <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbc.JDBCDriver"/> -->
+<!--      <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:/resource/db/notasFiscais.db"/> -->
+<!--       <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:C:/Desenvolvimento/workspace/workspace-leandro/fj26/WebContent/resources/resources/db/notasFiscais.db"/> -->
+<!--       <property name="javax.persistence.jdbc.user" value="sa"/> -->
+<!--       <property name="javax.persistence.jdbc.password" value=""/> -->
+
+	<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+	<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
+	<property name="hibernate.connection.url" value="jdbc:postgresql:system_inovacao" />
+	<property name="hibernate.connection.username" value="postgres" />
+	<property name="hibernate.connection.password" value="EyY67904141" />
+      
+      
+	<property name="hibernate.hbm2ddl.auto" value="update" />
+	<property name="hibernate.format_sql" value="true" />
+	<property name="hibernate.show_sql" value="true" />	
+      
+      <!-- LUCENE -->
+      <property name="hibernate.search.default.directory_provider" value="org.hibernate.search.store.FSDirectoryProvider"/>
+      <property name="hibernate.search.default.indexBase" value="WebContent/WEB-INF/lucene/indexes"/>
+	  <property name="hibernate.search.analyzer" value="org.apache.lucene.analysis.br.BrazilianAnalyzer"/>
+    
+    </properties>
+  </persistence-unit>
+</persistence>
